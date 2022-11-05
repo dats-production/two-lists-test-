@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d864b362f2a48a0b394ab0efc9ccdff, type: 3}
+  m_Name: PrefabsBase
+  m_EditorClassIdentifier: 
+  prefabs:
+  - Name: Cockroach
+    GameObject: {fileID: 9026608761796746660, guid: ebc235033d6212c49ac2ee28d1edbbb8, type: 3}
+  - Name: CheckPoint
+    GameObject: {fileID: 2906349096760427034, guid: 76e830dd989e139419bba403fbf0b965, type: 3}
+  - Name: TriggerZone
+    GameObject: {fileID: 9031899029884687520, guid: a3ecf42e052d4574f8d2733af31dbfa7, type: 3}
