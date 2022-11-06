@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d864b362f2a48a0b394ab0efc9ccdff, type: 3}
+  m_Script: {fileID: 11500000, guid: 12b6efb539764b82989ca604d699aace, type: 3}
   m_Name: PrefabsBase
   m_EditorClassIdentifier: 
   prefabs:
-  - Name: Cockroach
-    GameObject: {fileID: 9026608761796746660, guid: ebc235033d6212c49ac2ee28d1edbbb8, type: 3}
-  - Name: CheckPoint
-    GameObject: {fileID: 2906349096760427034, guid: 76e830dd989e139419bba403fbf0b965, type: 3}
-  - Name: TriggerZone
-    GameObject: {fileID: 9031899029884687520, guid: a3ecf42e052d4574f8d2733af31dbfa7, type: 3}
+  - Name: Item
+    GameObject: {fileID: 7275298486681806356, guid: 1e459eadad6d6384b9b84966b0ddb9e6, type: 3}
+  - Name: ItemList
+    GameObject: {fileID: 1528910248701501533, guid: 807366ddf2aa0394a9354c7aede999ea, type: 3}
+  - Name: MainScreen
+    GameObject: {fileID: 6956287057489956845, guid: 6c99946e647e15e4ab8e8a0be167dc63, type: 3}

@@ -9,7 +9,7 @@ namespace UI.Views
         void Hide();
     }
     
-    public abstract class BaseScreen: MonoBehaviour, IBaseScreen
+    public abstract class BaseScreen: LinkableView, IBaseScreen
     {
         public bool IsShown { get; private set; }
 
