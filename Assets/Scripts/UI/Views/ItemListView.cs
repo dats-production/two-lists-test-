@@ -29,18 +29,18 @@ namespace UI.Views
         public override void Link(AbstractModel model)
         {
             base.Link(model);
-            
-            _listModel = Model as AbstractListModel;
-            
             _spacingOffset = verticalLayoutGroup.spacing;
 
+            _listModel = Model as AbstractListModel;
             listNameText.text = _listModel.Name;
             itemsCountText.text = _listModel.StartItemCount.ToString();
             
-            _listModel.ItemList
-                .ObserveEveryValueChanged(x=> x.Count)
-                .Subscribe(SetCountText)
-                .AddTo(this);
+            // _listModel.ItemList
+            //     .ObserveEveryValueChanged(x=> x.Count)
+            //     .Subscribe(SetCountText)
+            //     .AddTo(this);
+
+            _listModel.OnUpdateListCount += SetCountText;
 
             stringSortToggle.OnValueChangedAsObservable()
                 .Subscribe(ToggleStingSorting)
@@ -49,6 +49,8 @@ namespace UI.Views
             intSortToggle.OnValueChangedAsObservable()
                 .Subscribe(ToggleIntSorting)
                 .AddTo(this);
+            
+            _listModel.SetContainerTransform(ItemContainer);
         }
 
         private void SetCountText(int count) =>

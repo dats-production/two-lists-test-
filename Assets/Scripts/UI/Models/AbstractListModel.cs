@@ -18,10 +18,12 @@ namespace UI.Models
         private SecondListModel _secondListModel;
         private IClearModule<ItemModel> _clearModule;
         private ISpawnModule<AbstractModel> _spawnModule;
-        private Action<int> OnReplaceInsideList;
+        private Transform _containerTransform;
+
         public List<ItemModel> ItemList { get; private set; } = new();
         public Transform ItemContainer { get; set; }
         public int StartItemCount { get; set; }
+        public Action<int> OnUpdateListCount { get; set; }
 
         [Inject]
         public void Construct(FirstListModel firstListModel, SecondListModel secondListModel,
@@ -34,6 +36,11 @@ namespace UI.Models
             // ItemList
             //     .ObserveEveryValueChanged(x=> x.Count)
             //     .Subscribe(OnValueChanged);
+        }
+
+        public void SetContainerTransform(Transform containerTransform)
+        {
+            _containerTransform = containerTransform;
         }
         
         public void SortByInt(bool isAscendant)
@@ -62,35 +69,36 @@ namespace UI.Models
         
         public void InsertItem(int index, ItemModel itemModel)
         {
-            
             if (ItemList.Contains(itemModel))
             {
                 ItemList.Remove(itemModel);
-                OnReplaceInsideList?.Invoke(index);
             }
             else RemoveFromOtherList(itemModel);
+            ClearItem(itemModel);
             
             if(index <= ItemList.Count)
                 ItemList.Insert(index, itemModel);
             else
                 ItemList.Add(itemModel);
-
-            var listView = View as ItemListView;
-            SpawnItem(itemModel, listView.ItemContainer);
+            
+            SpawnItem(itemModel);
+            OnUpdateListCount.Invoke(ItemList.Count);
             Debug.Log(_firstListModel.ItemList.Count());
             Debug.Log(_secondListModel.ItemList.Count());
-            //SpawnItem(itemModel, );
-            //_firstListModel.UpdateList();
-            //_secondListModel.UpdateList();
         }
 
         private void RemoveFromOtherList(ItemModel itemModel)
         {
             if (this is FirstListModel)
+            {
                 _secondListModel.ItemList.Remove(itemModel);
+                _secondListModel.OnUpdateListCount.Invoke(_secondListModel.ItemList.Count);
+            }
             else
+            {
                 _firstListModel.ItemList.Remove(itemModel);
-            ClearItem(itemModel);
+                _firstListModel.OnUpdateListCount.Invoke(_firstListModel.ItemList.Count);
+            }
         }
 
         private void UpdateList()
@@ -99,12 +107,13 @@ namespace UI.Models
             {
                 _clearModule.ClearView(itemModel);
                 _spawnModule.Spawn(itemModel);
+                OnUpdateListCount.Invoke(ItemList.Count);
             }
         }
 
-        private void SpawnItem(ItemModel itemModel, Transform parent)
+        private void SpawnItem(ItemModel itemModel)
         {
-            itemModel.ParentTransform = parent;
+            itemModel.ParentTransform = _containerTransform;
             UpdateList();
         }
         
