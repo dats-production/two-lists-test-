@@ -24,7 +24,7 @@ namespace Modules.Fabrics
         
         public ILinkable Instantiate(AbstractModel model)
         {
-            var prefab = _prefabsBase.Get(model.Name);
+            var prefab = _prefabsBase.Get(model.PrefabName);
             var go = _container.InstantiatePrefab(prefab, model.ParentTransform);
             var components = go.GetComponents<ILinkable>();
             Debug.Assert(components.Length == 1,$"Object view must have only one ILinkable component!!" +

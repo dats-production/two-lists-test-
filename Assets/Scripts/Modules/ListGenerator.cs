@@ -14,7 +14,7 @@ namespace Modules
     
     public class ListGenerator : IListGenerator
     {
-        const string glyphs= "abcdefghijklmnopqrstuvwxyz0123456789";
+        const string glyphs= "abcdefghijklmnopqrstuvwxyz";
         
         private readonly int _minItemIntValue = 0;
         private readonly int _maxItemIntValue = 100;
@@ -31,6 +31,8 @@ namespace Modules
         
         public void CreateList(AbstractListModel abstractListModel)
         {
+            var listView = abstractListModel.View as ItemListView;
+            abstractListModel.ItemContainer = listView.ItemContainer;
             for (var i = 0; i < abstractListModel.StartItemCount; i++)
             {
                 var itemModel = new ItemModel()
@@ -40,8 +42,7 @@ namespace Modules
                 };
                 abstractListModel.ItemList.Add(itemModel);
                 
-                itemModel.Name = "Item";
-                var listView = abstractListModel.View as ItemListView;
+                itemModel.PrefabName = "Item";
                 itemModel.ParentTransform = listView.ItemContainer;
                 _spawnModule.Spawn(itemModel);
             }

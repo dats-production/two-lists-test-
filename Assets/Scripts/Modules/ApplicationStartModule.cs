@@ -33,14 +33,16 @@ namespace Modules
 
         private void SetListModels()
         {
-            _firstListModel.Name = "ItemList";
-            _firstListModel.StartItemCount = 5;
+            _firstListModel.Name = "First List";
+            _firstListModel.PrefabName = "ItemList";
+            _firstListModel.StartItemCount = 2;
             _firstListModel.ParentTransform = _mainScreen.transform;
             _spawnModule.Spawn(_firstListModel);
             _listGenerator.CreateList(_firstListModel);
             
-            _secondListModel.Name = "ItemList";
-            _secondListModel.StartItemCount = 10;
+            _secondListModel.Name = "Second List";
+            _secondListModel.PrefabName = "ItemList";
+            _secondListModel.StartItemCount = 4;
             _secondListModel.ParentTransform = _mainScreen.transform;
             _spawnModule.Spawn(_secondListModel);
             _listGenerator.CreateList(_secondListModel);

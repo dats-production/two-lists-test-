@@ -25,12 +25,13 @@ namespace Installers
             Container.BindInterfacesTo<ApplicationStartModule>().AsSingle().NonLazy();
             Container.BindInterfacesTo<ListGenerator>().AsSingle();
             Container.BindInterfacesTo<ListChangerModule>().AsSingle();
+            Container.BindInterfacesTo<ClearModule<ItemModel>>().AsSingle();
         }
 
         private void BindModels()
         {
-            Container.BindInterfacesAndSelfTo<FirstListModel>().AsSingle();
-            Container.BindInterfacesAndSelfTo<SecondListModel>().AsSingle();
+            Container.Bind<FirstListModel>().AsSingle();
+            Container.Bind<SecondListModel>().AsSingle();
             Container.Bind<ItemModel>().AsSingle();
         }
     }

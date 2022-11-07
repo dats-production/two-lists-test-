@@ -39,7 +39,16 @@ namespace UI.Views
             
             _listModel.ItemList
                 .ObserveEveryValueChanged(x=> x.Count)
-                .Subscribe(SetCountText);
+                .Subscribe(SetCountText)
+                .AddTo(this);
+
+            stringSortToggle.OnValueChangedAsObservable()
+                .Subscribe(ToggleStingSorting)
+                .AddTo(this);
+
+            intSortToggle.OnValueChangedAsObservable()
+                .Subscribe(ToggleIntSorting)
+                .AddTo(this);
         }
 
         private void SetCountText(int count) =>
@@ -51,15 +60,15 @@ namespace UI.Views
 
             var newDropSiblingIndex = GetNewDropSiblingIndex(eventData);
             
-            var dragItemTransform = eventData.pointerDrag.transform;
-            dragItemTransform.SetParent(ItemContainer);
-            dragItemTransform.SetSiblingIndex(newDropSiblingIndex);
+            // var dragItemTransform = eventData.pointerDrag.transform;
+            // dragItemTransform.SetParent(ItemContainer);
+            // dragItemTransform.SetSiblingIndex(newDropSiblingIndex);
             //Debug.Log(newDropSiblingIndex);
 
             var dragItemView = eventData.pointerDrag.GetComponent<ItemView>();
             var dragItemModel = dragItemView.Model as ItemModel;
             
-            _listModel.InsertNewItem(newDropSiblingIndex, dragItemModel);
+            _listModel.InsertItem(newDropSiblingIndex, dragItemModel);
         }
         
         private int GetNewDropSiblingIndex(PointerEventData eventData)
@@ -71,6 +80,16 @@ namespace UI.Views
             
             var offsetBetweenItems = cellSize + _spacingOffset;
             return (int)((cellSize / 2 - dropLocalPosY) / offsetBetweenItems);
-        } 
+        }
+
+        private void ToggleStingSorting(bool isOn) 
+        {
+            _listModel.SortByString(isOn);
+        }
+
+        private void ToggleIntSorting(bool isOn) 
+        {
+            _listModel.SortByInt(isOn);
+        }
     }
 }
