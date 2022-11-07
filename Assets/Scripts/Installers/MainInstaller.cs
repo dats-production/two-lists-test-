@@ -24,6 +24,7 @@ namespace Installers
             Container.BindInterfacesTo<SpawnModule>().AsSingle();
             Container.BindInterfacesTo<ApplicationStartModule>().AsSingle().NonLazy();
             Container.BindInterfacesTo<ListGenerator>().AsSingle();
+            Container.BindInterfacesTo<ListChangerModule>().AsSingle();
         }
 
         private void BindModels()

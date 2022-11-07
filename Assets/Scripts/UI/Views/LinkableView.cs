@@ -12,17 +12,12 @@ namespace UI.Views
     
     public abstract class LinkableView : MonoBehaviour, ILinkable
     {
-        protected AbstractModel Model;
+        public AbstractModel Model;
         public Transform Transform => transform;
 
         public virtual void Link(AbstractModel model)
         {
             Model = model;
-        }
-
-        protected void SetParent()
-        {
-            gameObject.transform.SetParent(Model.ParentTransform);
         }
 
         public void Destroy()

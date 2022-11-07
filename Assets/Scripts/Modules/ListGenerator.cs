@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UI.Models;
 using UI.Views;
+using UniRx;
 using Zenject;
 using Random = UnityEngine.Random;
 
@@ -30,8 +31,7 @@ namespace Modules
         
         public void CreateList(AbstractListModel abstractListModel)
         {
-            abstractListModel.ItemList = new List<ItemModel>();
-            for (var i = 0; i < abstractListModel.ItemCount; i++)
+            for (var i = 0; i < abstractListModel.StartItemCount; i++)
             {
                 var itemModel = new ItemModel()
                 {
