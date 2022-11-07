@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Modules;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -15,6 +16,7 @@ namespace UI.Models
         private ISpawnModule<AbstractModel> _spawnModule;
         private Transform _containerTransform;
 
+        public ReactiveProperty<bool> IsSortingPanelActive { get; set; } = new();
         public List<ItemModel> ItemList { get; private set; } = new();
         public int StartItemCount { get; set; }
         public Action<int> OnUpdateListCount { get; set; }

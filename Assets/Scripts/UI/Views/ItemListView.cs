@@ -15,6 +15,7 @@ namespace UI.Views
         [SerializeField] private TMP_Text itemsCountText;
         [SerializeField] private Toggle stringSortToggle;
         [SerializeField] private Toggle intSortToggle;
+        [SerializeField] private Transform sortingPanel;
 
         private AbstractListModel _listModel;
 
@@ -44,8 +45,9 @@ namespace UI.Views
             intSortToggle.OnValueChangedAsObservable()
                 .Subscribe(ToggleIntSorting)
                 .AddTo(this);
-            
+
             _listModel.SetContainerTransform(ItemContainer);
+            _listModel.IsSortingPanelActive.Subscribe(ToggleSortingPanel);
         }
 
         private void SetCountText(int count) =>
@@ -84,5 +86,8 @@ namespace UI.Views
 
         private void ToggleIntSorting(bool isOn) =>
             _listModel.SortByInt(isOn);
+
+        private void ToggleSortingPanel(bool isOn) =>
+            sortingPanel.gameObject.SetActive(isOn);
     }
 }

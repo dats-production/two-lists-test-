@@ -11,7 +11,7 @@ namespace Modules
         private SecondListModel _secondListModel;
         private MainScreen _mainScreen;
         private IListGenerator _listGenerator;
-        private int _firstListItemCount = 5;
+        private int _firstListItemCount = 15;
         private int _secondListItemCount = 12;
 
         [Inject]
@@ -35,6 +35,7 @@ namespace Modules
             _firstListModel.ParentTransform = _mainScreen.transform;
             _spawnModule.Spawn(_firstListModel);
             _listGenerator.CreateList(_firstListModel);
+            _firstListModel.IsSortingPanelActive.Value = true;
             
             _secondListModel.Name = "Second List";
             _secondListModel.PrefabName = "ItemList";
@@ -42,6 +43,7 @@ namespace Modules
             _secondListModel.ParentTransform = _mainScreen.transform;
             _spawnModule.Spawn(_secondListModel);
             _listGenerator.CreateList(_secondListModel);
+            _secondListModel.IsSortingPanelActive.Value = false;
         }
     }
 }
