@@ -22,9 +22,8 @@ namespace Installers
             Container.BindInterfacesTo<PrefabsBase>().FromInstance(prefabBase).AsSingle();
             Container.BindInterfacesTo<InstantiateFabric>().AsSingle();
             Container.BindInterfacesTo<SpawnModule>().AsSingle();
-            Container.BindInterfacesTo<ApplicationStartModule>().AsSingle().NonLazy();
+            Container.Bind<ApplicationStartModule>().FromNew().AsSingle().NonLazy();
             Container.BindInterfacesTo<ListGenerator>().AsSingle();
-            Container.BindInterfacesTo<ListChangerModule>().AsSingle();
             Container.BindInterfacesTo<ClearModule<ItemModel>>().AsSingle();
         }
 

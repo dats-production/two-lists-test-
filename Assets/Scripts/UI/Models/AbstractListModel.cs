@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using Modules;
-using UI.Views;
-using UniRx;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Zenject;
 
 namespace UI.Models
 {
     public abstract class AbstractListModel: AbstractModel
     {
-
         private FirstListModel _firstListModel;
         private SecondListModel _secondListModel;
         private IClearModule<ItemModel> _clearModule;
@@ -21,7 +16,6 @@ namespace UI.Models
         private Transform _containerTransform;
 
         public List<ItemModel> ItemList { get; private set; } = new();
-        public Transform ItemContainer { get; set; }
         public int StartItemCount { get; set; }
         public Action<int> OnUpdateListCount { get; set; }
 
@@ -33,9 +27,6 @@ namespace UI.Models
             _clearModule = clearModule;
             _secondListModel = secondListModel;
             _firstListModel = firstListModel;
-            // ItemList
-            //     .ObserveEveryValueChanged(x=> x.Count)
-            //     .Subscribe(OnValueChanged);
         }
 
         public void SetContainerTransform(Transform containerTransform)
@@ -83,8 +74,6 @@ namespace UI.Models
             
             SpawnItem(itemModel);
             OnUpdateListCount.Invoke(ItemList.Count);
-            Debug.Log(_firstListModel.ItemList.Count());
-            Debug.Log(_secondListModel.ItemList.Count());
         }
 
         private void RemoveFromOtherList(ItemModel itemModel)

@@ -4,12 +4,7 @@ using Zenject;
 
 namespace Modules
 {
-    public interface IApplicationStartModule
-    {
-        
-    }
-    
-    public class ApplicationStartModule : IApplicationStartModule
+    public class ApplicationStartModule
     {
         private ISpawnModule<AbstractModel> _spawnModule;
         private FirstListModel _firstListModel;
@@ -18,7 +13,6 @@ namespace Modules
         private IListGenerator _listGenerator;
         private int _firstListItemCount = 5;
         private int _secondListItemCount = 12;
-
 
         [Inject]
         public void Construct(ISpawnModule<AbstractModel> spawnModule, FirstListModel firstListModel,

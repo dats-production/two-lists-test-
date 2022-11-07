@@ -1,5 +1,4 @@
-﻿using Modules;
-using TMPro;
+﻿using TMPro;
 using UI.Models;
 using UniRx;
 using UnityEngine;
@@ -16,12 +15,8 @@ namespace UI.Views
         [SerializeField] private TMP_Text itemsCountText;
         [SerializeField] private Toggle stringSortToggle;
         [SerializeField] private Toggle intSortToggle;
-        private Text testText;
-        
-        private IListGenerator _listGenerator;
-        private AbstractListModel _listModel;
 
-        private int _count;
+        private AbstractListModel _listModel;
 
         public Transform ItemContainer => itemContainer;
         private float _spacingOffset;
@@ -84,14 +79,10 @@ namespace UI.Views
             return (int)((cellSize / 2 - dropLocalPosY) / offsetBetweenItems);
         }
 
-        private void ToggleStingSorting(bool isOn) 
-        {
+        private void ToggleStingSorting(bool isOn) =>
             _listModel.SortByString(isOn);
-        }
 
-        private void ToggleIntSorting(bool isOn) 
-        {
+        private void ToggleIntSorting(bool isOn) =>
             _listModel.SortByInt(isOn);
-        }
     }
 }

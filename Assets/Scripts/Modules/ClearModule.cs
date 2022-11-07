@@ -1,6 +1,4 @@
-﻿
-using UI.Models;
-using UnityEngine;
+﻿using UI.Models;
 
 namespace Modules
 {

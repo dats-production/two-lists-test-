@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace UI.Models
+﻿namespace UI.Models
 {
     public class SecondListModel : AbstractListModel
     {

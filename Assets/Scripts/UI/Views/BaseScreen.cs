@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace UI.Views
+﻿namespace UI.Views
 {
     public interface IBaseScreen
     {
