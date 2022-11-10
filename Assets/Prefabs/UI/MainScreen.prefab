@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3084980594192878846}
   - component: {fileID: 7000464195669783601}
   - component: {fileID: 4098928762105114052}
+  - component: {fileID: 6547353831175307694}
   m_Layer: 5
   m_Name: SaveButton
   m_TagString: Untagged
@@ -136,6 +137,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 7000464195669783601}
+--- !u!114 &6547353831175307694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028539615653856601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44199f5365a34566aa1d51bd54c7b5e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 4098928762105114052}
 --- !u!1 &2858198081353356533
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,6 +298,7 @@ GameObject:
   - component: {fileID: 6179805094080773835}
   - component: {fileID: 6236071040577532773}
   - component: {fileID: 510379792629197148}
+  - component: {fileID: 1130604647277044164}
   m_Layer: 5
   m_Name: LadButton
   m_TagString: Untagged
@@ -407,6 +422,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 6236071040577532773}
+--- !u!114 &1130604647277044164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4174810736688643935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba9431d861d54479b8f50dfee7646970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 510379792629197148}
 --- !u!1 &6947183999316375843
 GameObject:
   m_ObjectHideFlags: 0

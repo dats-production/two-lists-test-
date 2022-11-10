@@ -48,7 +48,7 @@ namespace UI.Views
 
             _listModel.SetContainerTransform(ItemContainer);
             _listModel.IsSortingPanelActive.Subscribe(ToggleSortingPanel);
-            //layoutElement.preferredWidth = Screen.width / 2;
+            _listModel.OnListGenerated += AlignScrollView;
         }
 
         public void OnDrop(PointerEventData eventData)
@@ -56,24 +56,10 @@ namespace UI.Views
             if(!eventData.pointerDrag.TryGetComponent(out ItemView itemView)) return;
 
             var newDropSiblingIndex = GetNewDropSiblingIndex(eventData);
-            
-            // var dragItemTransform = eventData.pointerDrag.transform;
-            // dragItemTransform.SetParent(ItemContainer);
-            // dragItemTransform.SetSiblingIndex(newDropSiblingIndex);
-            //Debug.Log(newDropSiblingIndex);
-
             var dragItemView = eventData.pointerDrag.GetComponent<ItemView>();
             var dragItemModel = dragItemView.Model as ItemModel;
             
             _listModel.InsertItem(newDropSiblingIndex, dragItemModel);
-        }
-
-        private void SetCountText(int count) =>
-            itemsCountText.text = count.ToString();
-
-        public void AlignScrollView()
-        {
-            scrollbar.value = 1;
         }
         
         private int GetNewDropSiblingIndex(PointerEventData eventData)
@@ -86,6 +72,12 @@ namespace UI.Views
             var offsetBetweenItems = cellSize + _spacingOffset;
             return (int)((cellSize / 2 - dropLocalPosY) / offsetBetweenItems);
         }
+
+        private void SetCountText(int count) =>
+            itemsCountText.text = count.ToString();
+
+        private void AlignScrollView() =>
+            scrollbar.value = 1;
 
         private void ToggleStingSorting(bool isOn) =>
             _listModel.SortByString(isOn);

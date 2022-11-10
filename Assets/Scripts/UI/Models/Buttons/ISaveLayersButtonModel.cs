@@ -1,48 +1,42 @@
-﻿// using System;
-// using System.Linq;
-// using Constructor.DataStorage;
-// using Services;
-// using Services.SaveLoad;
-// using Services.SaveLoad.Data;
+﻿using System;
+using Modules;
+using Modules.SaveLoad;
 using UniRx;
 
-namespace UI.Models
+namespace UI.Models.Buttons
 {
     public interface ISaveLayersButtonModel
     {
-        //IObservable<IButtonModel> Button { get; }
+        IObservable<IButtonModel> Button { get; }
     }
 
     public class SaveLayersButtonModel : ISaveLayersButtonModel
     {
-        // private readonly IDataStorage dataStorage;
-        // private readonly IFileBrowser fileBrowser;
-        // private readonly ISaveLoadService saveLoadService;
-        //
-        // public SaveLayersButtonModel(IDataStorage dataStorage,
-        //     IFileBrowser fileBrowser,
-        //     ISaveLoadService saveLoadService)
-        // {
-        //     this.dataStorage = dataStorage;
-        //     this.fileBrowser = fileBrowser;
-        //     this.saveLoadService = saveLoadService;
-        // }
-        //
-        // public IObservable<IButtonModel> Button =>
-        //     Observable.Create<IButtonModel>(observer =>
-        //     {
-        //         var disposable = new CompositeDisposable();
-        //         var model = new ButtonModel();
-        //         model.AddTo(disposable);
-        //         model.Click.Subscribe(_ =>
-        //         {
-        //             var layers = dataStorage.Layers.Select(x => x.AsLayerData()).ToList();
-        //             var path = fileBrowser.SaveFilePanel("Save file", null, null, null);
-        //             var data = new LayersData(layers);
-        //             saveLoadService.SaveLayers(data, path.Name);
-        //         }).AddTo(disposable);
-        //         observer.OnNext(model);
-        //         return disposable;
-        //     });
+        private readonly IFileBrowser fileBrowser;
+        private readonly ISaveLoadModule _saveLoadModule;
+        
+        public SaveLayersButtonModel(IFileBrowser fileBrowser,
+            ISaveLoadModule saveLoadModule)
+        {
+            this.fileBrowser = fileBrowser;
+            this._saveLoadModule = saveLoadModule;
+        }
+        
+        public IObservable<IButtonModel> Button =>
+            Observable.Create<IButtonModel>(observer =>
+            {
+                var disposable = new CompositeDisposable();
+                var model = new ButtonModel();
+                model.AddTo(disposable);
+                model.Click.Subscribe(_ =>
+                {
+                    // var layers = dataStorage.Layers.Select(x => x.AsLayerData()).ToList();
+                    // var path = fileBrowser.SaveFilePanel("Save file", null, null, null);
+                    // var data = new LayersData(layers);
+                    // saveLoadService.SaveLayers(data, path.Name);
+                }).AddTo(disposable);
+                observer.OnNext(model);
+                return disposable;
+            });
     }
 }

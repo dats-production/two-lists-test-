@@ -20,6 +20,7 @@ namespace UI.Models
         public List<ItemModel> ItemList { get; private set; } = new();
         public int StartItemCount { get; set; }
         public Action<int> OnUpdateListCount { get; set; }
+        public Action OnListGenerated { get; set; }
 
         [Inject]
         public void Construct(FirstListModel firstListModel, SecondListModel secondListModel,
@@ -77,8 +78,6 @@ namespace UI.Models
             SpawnItem(itemModel);
             OnUpdateListCount.Invoke(ItemList.Count);
         }
-        
-        //public void Ali
 
         private void RemoveFromOtherList(ItemModel itemModel)
         {
