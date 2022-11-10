@@ -34,10 +34,10 @@ namespace Modules
             {
                 var itemModel = new ItemModel()
                 {
-                    IntProperty = GetRandomInt(),
-                    StringProperty = GetRandomString()
+                    IntValue = GetRandomInt(),
+                    StringValue = GetRandomString()
                 };
-                abstractListModel.ItemList.Add(itemModel);
+                abstractListModel.ItemsList.Add(itemModel);
                 
                 itemModel.PrefabName = "Item";
                 itemModel.ParentTransform = listView.ItemContainer;

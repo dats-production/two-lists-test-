@@ -1,6 +1,7 @@
 ﻿using DataBases;
 using Modules;
 using Modules.Fabrics;
+using Modules.SaveLoad;
 using UI.Models;
 using UnityEngine;
 using Zenject;
@@ -25,6 +26,8 @@ namespace Installers
             Container.Bind<ApplicationStartModule>().FromNew().AsSingle().NonLazy();
             Container.BindInterfacesTo<ListGenerator>().AsSingle();
             Container.BindInterfacesTo<ClearModule<ItemModel>>().AsSingle();
+            Container.BindInterfacesTo<SaveLoadModule>().AsSingle();
+            Container.BindInterfacesTo<FileBrowser>().AsSingle();
         }
 
         private void BindModels()

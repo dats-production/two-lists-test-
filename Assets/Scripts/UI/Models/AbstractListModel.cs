@@ -17,7 +17,7 @@ namespace UI.Models
         private Transform _containerTransform;
 
         public ReactiveProperty<bool> IsSortingPanelActive { get; set; } = new();
-        public List<ItemModel> ItemList { get; private set; } = new();
+        public List<ItemModel> ItemsList { get; private set; } = new();
         public int StartItemCount { get; set; }
         public Action<int> OnUpdateListCount { get; set; }
         public Action OnListGenerated { get; set; }
@@ -39,67 +39,67 @@ namespace UI.Models
         
         public void SortByInt(bool isAscendant)
         {
-            if(ItemList == null || ItemList.Count == 0) return;
+            if(ItemsList == null || ItemsList.Count == 0) return;
 
             IEnumerable<ItemModel> sortedList = isAscendant 
-                ? ItemList.OrderBy(x => x?.IntProperty).ToList() 
-                : ItemList.OrderByDescending(x => x?.IntProperty).ToList();
+                ? ItemsList.OrderBy(x => x?.IntValue).ToList() 
+                : ItemsList.OrderByDescending(x => x?.IntValue).ToList();
             
-            ItemList = (List<ItemModel>)sortedList;
+            ItemsList = (List<ItemModel>)sortedList;
             UpdateList();
         }
         
         public void SortByString(bool isAscendant)
         {
-            if(ItemList == null || ItemList.Count == 0) return;
+            if(ItemsList == null || ItemsList.Count == 0) return;
 
             IEnumerable<ItemModel> sortedList = isAscendant 
-                ? ItemList.OrderBy(x => x?.StringProperty).ToList() 
-                : ItemList.OrderByDescending(x => x?.StringProperty).ToList();
+                ? ItemsList.OrderBy(x => x?.StringValue).ToList() 
+                : ItemsList.OrderByDescending(x => x?.StringValue).ToList();
             
-            ItemList = (List<ItemModel>)sortedList;
+            ItemsList = (List<ItemModel>)sortedList;
             UpdateList();
         }
         
         public void InsertItem(int index, ItemModel itemModel)
         {
-            if (ItemList.Contains(itemModel))
+            if (ItemsList.Contains(itemModel))
             {
-                ItemList.Remove(itemModel);
+                ItemsList.Remove(itemModel);
             }
             else RemoveFromOtherList(itemModel);
             ClearItem(itemModel);
             
-            if(index <= ItemList.Count)
-                ItemList.Insert(index, itemModel);
+            if(index <= ItemsList.Count)
+                ItemsList.Insert(index, itemModel);
             else
-                ItemList.Add(itemModel);
+                ItemsList.Add(itemModel);
             
             SpawnItem(itemModel);
-            OnUpdateListCount.Invoke(ItemList.Count);
+            OnUpdateListCount.Invoke(ItemsList.Count);
         }
 
         private void RemoveFromOtherList(ItemModel itemModel)
         {
             if (this is FirstListModel)
             {
-                _secondListModel.ItemList.Remove(itemModel);
-                _secondListModel.OnUpdateListCount.Invoke(_secondListModel.ItemList.Count);
+                _secondListModel.ItemsList.Remove(itemModel);
+                _secondListModel.OnUpdateListCount.Invoke(_secondListModel.ItemsList.Count);
             }
             else
             {
-                _firstListModel.ItemList.Remove(itemModel);
-                _firstListModel.OnUpdateListCount.Invoke(_firstListModel.ItemList.Count);
+                _firstListModel.ItemsList.Remove(itemModel);
+                _firstListModel.OnUpdateListCount.Invoke(_firstListModel.ItemsList.Count);
             }
         }
 
         private void UpdateList()
         {
-            foreach (var itemModel in ItemList)
+            foreach (var itemModel in ItemsList)
             {
                 _clearModule.ClearView(itemModel);
                 _spawnModule.Spawn(itemModel);
-                OnUpdateListCount.Invoke(ItemList.Count);
+                OnUpdateListCount.Invoke(ItemsList.Count);
             }
         }
 

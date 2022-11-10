@@ -21,8 +21,8 @@ namespace UI.Views
             base.Link(model);
 
             var itemModel = model as ItemModel;
-            stringText.text = itemModel.StringProperty;
-            intText.text = itemModel.IntProperty.ToString();
+            stringText.text = itemModel.StringValue;
+            intText.text = itemModel.IntValue.ToString();
         }
 
         public void OnBeginDrag(PointerEventData eventData)

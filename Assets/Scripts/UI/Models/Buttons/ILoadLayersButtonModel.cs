@@ -2,6 +2,7 @@
 using Modules;
 using Modules.SaveLoad;
 using UniRx;
+using UnityEngine;
 
 namespace UI.Models.Buttons
 {
@@ -30,6 +31,7 @@ namespace UI.Models.Buttons
                 model.AddTo(disposable);
                 model.Click.Subscribe(_ =>
                 {
+                    Debug.Log("Load");
                     // var path = fileBrowser.OpenFilePanel("Open file", null, null, false);
                     // var data = saveLoadService.LoadLayers(path.First().Name);
                     // var layers = data.Layers.Select(x => x.ToLayer()).ToList();

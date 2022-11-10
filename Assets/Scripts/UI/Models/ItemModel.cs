@@ -2,7 +2,7 @@
 {
     public class ItemModel : AbstractModel
     {
-        public int IntProperty { get; set; }
-        public string StringProperty { get; set; }
+        public int IntValue { get; set; }
+        public string StringValue { get; set; }
     }
 }
