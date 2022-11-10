@@ -32,15 +32,15 @@ namespace Modules
             _firstListModel.Name = "First List";
             _firstListModel.PrefabName = "ItemList";
             _firstListModel.StartItemCount = _firstListItemCount;
-            _firstListModel.ParentTransform = _mainScreen.transform;
+            _firstListModel.ParentTransform = _mainScreen.ListsContainer;
+            _firstListModel.IsSortingPanelActive.Value = true;
             _spawnModule.Spawn(_firstListModel);
             _listGenerator.CreateList(_firstListModel);
-            _firstListModel.IsSortingPanelActive.Value = true;
             
             _secondListModel.Name = "Second List";
             _secondListModel.PrefabName = "ItemList";
             _secondListModel.StartItemCount = _secondListItemCount;
-            _secondListModel.ParentTransform = _mainScreen.transform;
+            _secondListModel.ParentTransform = _mainScreen.ListsContainer;
             _spawnModule.Spawn(_secondListModel);
             _listGenerator.CreateList(_secondListModel);
             _secondListModel.IsSortingPanelActive.Value = false;

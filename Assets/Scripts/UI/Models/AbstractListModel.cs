@@ -77,6 +77,8 @@ namespace UI.Models
             SpawnItem(itemModel);
             OnUpdateListCount.Invoke(ItemList.Count);
         }
+        
+        //public void Ali
 
         private void RemoveFromOtherList(ItemModel itemModel)
         {

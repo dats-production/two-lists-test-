@@ -16,17 +16,17 @@ namespace UI.Views
         [SerializeField] private Toggle stringSortToggle;
         [SerializeField] private Toggle intSortToggle;
         [SerializeField] private Transform sortingPanel;
+        [SerializeField] private Scrollbar scrollbar;
 
         private AbstractListModel _listModel;
+        private float _spacingOffset;
 
         public Transform ItemContainer => itemContainer;
-        private float _spacingOffset;
 
         public override void Link(AbstractModel model)
         {
             base.Link(model);
             _spacingOffset = verticalLayoutGroup.spacing;
-
             _listModel = Model as AbstractListModel;
             listNameText.text = _listModel.Name;
             itemsCountText.text = _listModel.StartItemCount.ToString();
@@ -48,10 +48,8 @@ namespace UI.Views
 
             _listModel.SetContainerTransform(ItemContainer);
             _listModel.IsSortingPanelActive.Subscribe(ToggleSortingPanel);
+            //layoutElement.preferredWidth = Screen.width / 2;
         }
-
-        private void SetCountText(int count) =>
-            itemsCountText.text = count.ToString();
 
         public void OnDrop(PointerEventData eventData)
         {
@@ -68,6 +66,14 @@ namespace UI.Views
             var dragItemModel = dragItemView.Model as ItemModel;
             
             _listModel.InsertItem(newDropSiblingIndex, dragItemModel);
+        }
+
+        private void SetCountText(int count) =>
+            itemsCountText.text = count.ToString();
+
+        public void AlignScrollView()
+        {
+            scrollbar.value = 1;
         }
         
         private int GetNewDropSiblingIndex(PointerEventData eventData)

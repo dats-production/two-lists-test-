@@ -17,5 +17,3 @@ MonoBehaviour:
     GameObject: {fileID: 7275298486681806356, guid: 1e459eadad6d6384b9b84966b0ddb9e6, type: 3}
   - Name: ItemList
     GameObject: {fileID: 1678943095328907609, guid: d645c41e12efedf478316afdb1f25ff0, type: 3}
-  - Name: MainScreen
-    GameObject: {fileID: 6956287057489956845, guid: 6c99946e647e15e4ab8e8a0be167dc63, type: 3}
