@@ -1,5 +1,4 @@
-﻿using System;
-using UI.Views;
+﻿using UI.Views;
 using UnityEngine;
 
 namespace UI.Models
@@ -10,6 +9,5 @@ namespace UI.Models
         public string PrefabName { get; set; }
         public ILinkable View { get; set; }
         public Transform ParentTransform { get; set; }
-        public Action OnClearView { get; set; }
     }
 }

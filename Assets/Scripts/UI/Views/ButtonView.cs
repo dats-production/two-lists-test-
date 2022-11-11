@@ -1,4 +1,4 @@
-﻿using UI.Models;
+﻿using UI.Models.Buttons;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;

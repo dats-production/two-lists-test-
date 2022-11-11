@@ -7,6 +7,7 @@ namespace Modules.SaveLoad.Data
     public class ListsData
     {
         public List<ListData> Lists;
+        
         public ListsData(List<ListData> lists)
         {
             Lists = lists;

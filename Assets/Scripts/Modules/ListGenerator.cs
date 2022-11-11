@@ -7,15 +7,9 @@ using Zenject;
 
 namespace Modules
 {
-    public interface IListGenerator
-    {
-        void GenerateList(ListModel listModel);
-    }
-    
-    public class ListGenerator : IListGenerator
+    public class ListGenerator
     {
         private ISpawnModule<AbstractModel> _spawnModule;
-        private IDataStorage _dataStorage;
         private MainScreen _mainScreen;
 
         [Inject]
@@ -23,10 +17,9 @@ namespace Modules
             IDataStorage dataStorage, MainScreen mainScreen)
         {
             _mainScreen = mainScreen;
-            _dataStorage = dataStorage;
             _spawnModule = spawnModule;
-            _dataStorage.Lists.ObserveAdd()
-                .Select(x=>x.Value)
+            dataStorage.Lists.ObserveAdd()
+                .Select(x => x.Value)
                 .Subscribe(GenerateList);
         }
         

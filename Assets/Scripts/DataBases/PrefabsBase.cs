@@ -15,9 +15,8 @@ namespace DataBases
 
         public GameObject Get(string prefabName)
         {
-            for (var i = 0; i < prefabs.Length; i++)
+            foreach (var prefab in prefabs)
             {
-                var prefab = prefabs[i];
                 if (prefab.Name == prefabName)
                     return prefab.GameObject;
             }

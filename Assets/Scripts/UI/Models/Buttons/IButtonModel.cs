@@ -1,7 +1,7 @@
 ﻿using System;
 using UniRx;
 
-namespace UI.Models
+namespace UI.Models.Buttons
 {
     public interface IButtonModel
     {

@@ -20,6 +20,7 @@ namespace UI.Views
 
         private ListModel _listModel;
         private float _spacingOffset;
+        private float _sortingPanelHeight;
 
         public Transform ItemContainer => itemContainer;
 
@@ -29,12 +30,6 @@ namespace UI.Views
             _spacingOffset = verticalLayoutGroup.spacing;
             _listModel = Model as ListModel;
             listNameText.text = _listModel.Name;
-            //itemsCountText.text = _listModel.StartItemCount.ToString();
-            
-            // _listModel.ItemList
-            //     .ObserveEveryValueChanged(x=> x.Count)
-            //     .Subscribe(SetCountText)
-            //     .AddTo(this);
 
             _listModel.OnUpdateListCount += SetCountText;
 
@@ -51,6 +46,8 @@ namespace UI.Views
                     .Subscribe(ToggleIntSorting)
                     .AddTo(this);
             };
+
+            _sortingPanelHeight = sortingPanel.gameObject.GetComponent<RectTransform>().rect.height;
         }
 
         public void OnDrop(PointerEventData eventData)
@@ -70,11 +67,10 @@ namespace UI.Views
             var cellSize = pointerDragRectTransform.rect.height;
             var dropPosY = pointerDragRectTransform.localPosition.y;
             var dropLocalPosY = 0f;
-            if (sortingPanel.gameObject.activeSelf)
-                dropLocalPosY = dropPosY - ItemContainer.localPosition.y
-                                + sortingPanel.gameObject.GetComponent<RectTransform>().rect.height;
-            else
-                dropLocalPosY = dropPosY - ItemContainer.localPosition.y;
+            // if (!_listModel.IsSortingPanelActive)
+            //     dropLocalPosY = dropPosY - ItemContainer.localPosition.y ;
+            // else
+                dropLocalPosY = dropPosY - ItemContainer.localPosition.y + _sortingPanelHeight;
             var offsetBetweenItems = cellSize + _spacingOffset;
             return (int)((cellSize / 2 - dropLocalPosY) / offsetBetweenItems);
         }

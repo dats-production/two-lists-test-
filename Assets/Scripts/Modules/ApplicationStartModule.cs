@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Modules.DataStorage;
 using UI.Models;
-using UI.Views;
 using UnityEngine;
 using Zenject;
 
@@ -9,30 +8,23 @@ namespace Modules
 {
     public class ApplicationStartModule
     {
-        const string glyphs= "abcdefghijklmnopqrstuvwxyz";
+        private const string Glyphs = "abcdefghijklmnopqrstuvwxyz";
         
         private readonly int _minItemIntValue = 0;
         private readonly int _maxItemIntValue = 100;
         private readonly int _minCharAmount = 1;
         private readonly int _maxCharAmount = 10;
         
-        private ISpawnModule<AbstractModel> _spawnModule;
-        private MainScreen _mainScreen;
-        private IListGenerator _listGenerator;
-        private int _firstListItemCount = 2;
-        private int _secondListItemCount = 4;
+        private readonly int _firstListItemCount = 2;
+        private readonly int _secondListItemCount = 4;
         private DiContainer _diContainer;
         private IDataStorage _dataStorage;
 
         [Inject]
-        public void Construct(ISpawnModule<AbstractModel> spawnModule, DiContainer diContainer,
-            MainScreen mainScreen, IListGenerator listGenerator, IDataStorage dataStorage)
+        public void Construct(DiContainer diContainer, IDataStorage dataStorage)
         {
             _dataStorage = dataStorage;
             _diContainer = diContainer;
-            _listGenerator = listGenerator;
-            _mainScreen = mainScreen;
-            _spawnModule = spawnModule;
             
             CreateListModels();
         }
@@ -78,7 +70,7 @@ namespace Modules
             var myString = "";
             for(var i = 0; i < charAmount; i++)
             {
-                myString += glyphs[Random.Range(0, glyphs.Length)];
+                myString += Glyphs[Random.Range(0, Glyphs.Length)];
             }
             return myString;
         }

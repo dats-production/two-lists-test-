@@ -9,6 +9,7 @@ namespace Modules.SaveLoad.Data
         public string Name;
         public List<ItemData> Items;
         public bool IsSortingPanelActive;
+        
         public ListData(string name, List<ItemData> items, bool isSortingPanelActive)
         {
             Name = name;

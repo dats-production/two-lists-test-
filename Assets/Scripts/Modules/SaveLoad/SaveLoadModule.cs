@@ -8,33 +8,18 @@ namespace Modules.SaveLoad
     {
         void Save(ListsData data);
         ListsData Load();
-        // void SaveCharacters(CharactersData data, string filePath);
-        // LayersData LoadLayers(string filePath);
     }
 
     public class SaveLoadModule : ISaveLoadModule
     {
-        private string _fileName = "Lists";
+        private const string FileName = "Lists";
+
         public void SaveLayers(ListsData data, string filePath)
         {
             var json = JsonUtility.ToJson(data);
             using var writer = new StreamWriter(File.Create(filePath));
             writer.Write(json);
         }
-        // public ListsData LoadLayers(string filePath)
-        // {
-        //     using var reader = new StreamReader(filePath);
-        //     var json = reader.ReadToEnd();
-        //     var data = JsonUtility.FromJson<ListsData>(json);
-        //     return data;
-        // }
-        //
-        // private static void Save(object data, string filePath)
-        // {
-        //     var json = JsonUtility.ToJson(data);
-        //     using var writer = new StreamWriter(File.Create(filePath));
-        //     writer.Write(json);
-        // }
         
         public ListsData Load()
         {
@@ -51,9 +36,9 @@ namespace Modules.SaveLoad
             writer.Write(json);
         }
 
-        private string GetFilePath()
+        private static string GetFilePath()
         {
-            return Application.dataPath + "/" + _fileName;
+            return Application.dataPath + "/" + FileName;
         }
     }
 }
