@@ -29,9 +29,8 @@ namespace Modules
             listModel.ParentTransform = _mainScreen.ListsContainer;
             _spawnModule.Spawn(listModel);
             
-            var listView = listModel.View as ListView;
             foreach (var itemModel in listModel.Items)
-                GenerateItem(itemModel, listView.ItemContainer);
+                GenerateItem(itemModel, listModel.ItemContainer);
             listModel.OnListGenerated?.Invoke();
         }
 

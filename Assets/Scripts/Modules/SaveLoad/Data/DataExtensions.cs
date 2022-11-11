@@ -19,7 +19,7 @@ namespace Modules.SaveLoad.Data
             return diContainer.Instantiate<ListModel>(new object[]
             {
                 data.Name,
-                data.Items.Select(x => x.ToItemModel()).ToList(),
+                data.Items.Select(x => x.ToItemModel(diContainer)).ToList(),
                 data.IsSortingPanelActive
             });
         }
@@ -29,9 +29,13 @@ namespace Modules.SaveLoad.Data
             return new ItemData(itemModel.StringValue, itemModel.IntValue);
         }
         
-        private static ItemModel ToItemModel(this ItemData data)
+        private static ItemModel ToItemModel(this ItemData data, DiContainer diContainer)
         {
-            return new ItemModel(data.StringValue, data.IntValue);
+            return diContainer.Instantiate<ItemModel>(new object[]
+            {
+                data.StringValue,
+                data.IntValue
+            });
         }
     }
 }

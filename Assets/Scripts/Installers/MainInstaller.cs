@@ -22,6 +22,7 @@ namespace Installers
             Container.BindInterfacesTo<SpawnModule>().AsSingle();
             Container.Bind<ListGenerator>().FromNew().AsSingle().NonLazy();
             Container.BindInterfacesTo<SaveLoadModule>().AsSingle();
+            Container.BindInterfacesTo<DragAndDropModule>().AsSingle();
             Container.Bind<ApplicationStartModule>().FromNew().AsSingle().NonLazy();
         }
     }

@@ -19,21 +19,19 @@ namespace UI.Views
         [SerializeField] private Scrollbar scrollbar;
 
         private ListModel _listModel;
-        private float _spacingOffset;
-        private float _sortingPanelHeight;
-
-        public Transform ItemContainer => itemContainer;
 
         public override void Link(AbstractModel model)
         {
             base.Link(model);
-            _spacingOffset = verticalLayoutGroup.spacing;
             _listModel = Model as ListModel;
             listNameText.text = _listModel.Name;
-
+            
             _listModel.OnUpdateListCount += SetCountText;
-
-            _listModel.SetContainerTransform(ItemContainer);
+            _listModel.ItemContainer = itemContainer;
+            _listModel.SpacingOffset = verticalLayoutGroup.spacing;
+            _listModel.SortingPanelHeight = sortingPanel.gameObject.GetComponent<RectTransform>().rect.height;;
+            
+            _listModel.SetContainerTransform(itemContainer);
             _listModel.OnListGenerated += AlignScrollView;
             _listModel.OnListGenerated += () =>
             {
@@ -46,33 +44,12 @@ namespace UI.Views
                     .Subscribe(ToggleIntSorting)
                     .AddTo(this);
             };
-
-            _sortingPanelHeight = sortingPanel.gameObject.GetComponent<RectTransform>().rect.height;
         }
 
         public void OnDrop(PointerEventData eventData)
         {
-            if(!eventData.pointerDrag.TryGetComponent(out ItemView itemView)) return;
-
-            var newDropSiblingIndex = GetNewDropSiblingIndex(eventData);
-            var dragItemView = eventData.pointerDrag.GetComponent<ItemView>();
-            var dragItemModel = dragItemView.Model as ItemModel;
-            
-            _listModel.InsertItem(newDropSiblingIndex, dragItemModel);
-        }
-        
-        private int GetNewDropSiblingIndex(PointerEventData eventData)
-        {
-            var pointerDragRectTransform = eventData.pointerDrag.GetComponent<RectTransform>();
-            var cellSize = pointerDragRectTransform.rect.height;
-            var dropPosY = pointerDragRectTransform.localPosition.y;
-            var dropLocalPosY = 0f;
-            // if (!_listModel.IsSortingPanelActive)
-            //     dropLocalPosY = dropPosY - ItemContainer.localPosition.y ;
-            // else
-                dropLocalPosY = dropPosY - ItemContainer.localPosition.y + _sortingPanelHeight;
-            var offsetBetweenItems = cellSize + _spacingOffset;
-            return (int)((cellSize / 2 - dropLocalPosY) / offsetBetweenItems);
+            _listModel.SetListToDrop();
+            _listModel.SetDropData(eventData);
         }
 
         private void SetCountText(int count) =>
@@ -89,5 +66,6 @@ namespace UI.Views
 
         private void ToggleSortingPanel(bool isOn) =>
             sortingPanel.gameObject.SetActive(isOn);
+
     }
 }

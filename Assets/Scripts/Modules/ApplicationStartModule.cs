@@ -53,7 +53,11 @@ namespace Modules
             var itemModelsList = new List<ItemModel>();
             for (var i = 0; i < count; i++)
             {
-                var itemModel = new ItemModel(GetRandomString(), GetRandomInt());
+                var itemModel = _diContainer.Instantiate<ItemModel>(new object[]
+                {
+                    GetRandomString(),
+                    GetRandomInt()
+                });
                 itemModelsList.Add(itemModel);
             }
             return itemModelsList;

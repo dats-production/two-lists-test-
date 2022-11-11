@@ -4,6 +4,7 @@ using System.Linq;
 using Modules;
 using Modules.DataStorage;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Zenject;
 
 namespace UI.Models
@@ -14,11 +15,16 @@ namespace UI.Models
         private ISpawnModule<AbstractModel> _spawnModule;
         private Transform _containerTransform;
         private IDataStorage _dataStorage;
+        private IDragAndDropModule _dragAndDropModule;
 
         public bool IsSortingPanelActive { get; }
+        public bool IsDropTo { get; }
         public List<ItemModel> Items { get; private set; } = new();
         public Action<int> OnUpdateListCount { get; set; }
         public Action OnListGenerated { get; set; }
+        public Transform ItemContainer { get; set; }
+        public float SpacingOffset { get; set; }
+        public float SortingPanelHeight { get; set; }
 
         public ListModel(string name, List<ItemModel> items, bool isSortingPanelActive)
         {
@@ -29,8 +35,10 @@ namespace UI.Models
         
         [Inject]
         public void Construct(IClearModule<ItemModel> clearModule,
-            ISpawnModule<AbstractModel> spawnModule, IDataStorage dataStorage)
+            ISpawnModule<AbstractModel> spawnModule, IDataStorage dataStorage,
+            IDragAndDropModule dragAndDropModule)
         {
+            _dragAndDropModule = dragAndDropModule;
             _dataStorage = dataStorage;
             _spawnModule = spawnModule;
             _clearModule = clearModule;
@@ -78,6 +86,16 @@ namespace UI.Models
             
             SpawnItem(itemModel);
             OnUpdateListCount?.Invoke(Items.Count);
+        }
+
+        public void SetListToDrop()
+        {
+            _dragAndDropModule.SetListToDrop(this);
+        }
+
+        public void SetDropData(PointerEventData eventData)
+        {
+            _dragAndDropModule.OnDrop(eventData);
         }
 
         private void RemoveFromList(ItemModel itemModel)

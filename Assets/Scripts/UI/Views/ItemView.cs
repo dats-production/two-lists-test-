@@ -15,14 +15,18 @@ namespace UI.Views
         [SerializeField] private CanvasGroup _canvasGroup;
         
         private Vector3 _beginDragPosition;
+        private ItemModel _itemModel;
+        private RectTransform _rectTransform;
 
         public override void Link(AbstractModel model)
         {
             base.Link(model);
 
-            var itemModel = model as ItemModel;
-            stringText.text = itemModel.StringValue;
-            intText.text = itemModel.IntValue.ToString();
+            _itemModel = model as ItemModel;
+            stringText.text = _itemModel.StringValue;
+            intText.text = _itemModel.IntValue.ToString();
+            _rectTransform = GetComponent<RectTransform>();
+            _itemModel.ItemHeight = _rectTransform.rect.height;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -32,6 +36,7 @@ namespace UI.Views
             _canvasComponent.overrideSorting = true;
             _canvasComponent.sortingOrder = 999;
             _canvasGroup.blocksRaycasts = false;
+            _itemModel.SetDraggedItem(true);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -44,6 +49,7 @@ namespace UI.Views
             transform.localPosition = _beginDragPosition;
             _canvasComponent.sortingOrder = 1;
             _canvasGroup.blocksRaycasts = true;
+            _itemModel.SetDraggedItem(false);
         }
     }
 }
