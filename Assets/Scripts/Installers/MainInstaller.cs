@@ -1,5 +1,6 @@
 ﻿using DataBases;
 using Modules;
+using Modules.DataStorage;
 using Modules.Fabrics;
 using Modules.SaveLoad;
 using UI.Models;
@@ -20,20 +21,19 @@ namespace Installers
 
         private void BindModules()
         {
+            Container.BindInterfacesTo<ClearModule<ItemModel>>().AsSingle();
+            Container.BindInterfacesTo<DataStorage>().AsSingle();
             Container.BindInterfacesTo<PrefabsBase>().FromInstance(prefabBase).AsSingle();
             Container.BindInterfacesTo<InstantiateFabric>().AsSingle();
             Container.BindInterfacesTo<SpawnModule>().AsSingle();
             Container.Bind<ApplicationStartModule>().FromNew().AsSingle().NonLazy();
             Container.BindInterfacesTo<ListGenerator>().AsSingle();
-            Container.BindInterfacesTo<ClearModule<ItemModel>>().AsSingle();
             Container.BindInterfacesTo<SaveLoadModule>().AsSingle();
-            Container.BindInterfacesTo<FileBrowser>().AsSingle();
         }
 
         private void BindModels()
         {
-            Container.Bind<FirstListModel>().AsSingle();
-            Container.Bind<SecondListModel>().AsSingle();
+            //Container.Bind<ListModel>().AsSingle();
             Container.Bind<ItemModel>().AsSingle();
         }
     }

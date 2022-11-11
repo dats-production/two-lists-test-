@@ -1,4 +1,4 @@
-﻿using Modules;
+﻿using Modules.DataStorage;
 using Modules.SaveLoad;
 using UI.Models.Buttons;
 using UniRx;
@@ -12,9 +12,10 @@ namespace UI.Views
         [SerializeField] private ButtonView button;
 
         [Inject]
-        public void Construct(IFileBrowser fileBrowser, ISaveLoadModule saveLoadModule)
+        public void Construct(ISaveLoadModule saveLoadModule, IDataStorage dataStorage,
+            DiContainer diContainer)
         {
-            var model = new LoadLayersButtonModel(fileBrowser, saveLoadModule);
+            var model = new LoadLayersButtonModel(saveLoadModule, dataStorage, diContainer);
             model.Button.Subscribe(button.Bind).AddTo(this);
         }
     }

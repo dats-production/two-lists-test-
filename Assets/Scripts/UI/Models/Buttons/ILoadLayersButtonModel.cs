@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Linq;
 using Modules;
+using Modules.DataStorage;
 using Modules.SaveLoad;
+using Modules.SaveLoad.Data;
 using UniRx;
 using UnityEngine;
+using Zenject;
 
 namespace UI.Models.Buttons
 {
@@ -13,14 +17,16 @@ namespace UI.Models.Buttons
 
     public class LoadLayersButtonModel : ILoadLayersButtonModel
     {
-        private readonly IFileBrowser fileBrowser;
         private readonly ISaveLoadModule _saveLoadModule;
-        
-        public LoadLayersButtonModel(IFileBrowser fileBrowser,
-            ISaveLoadModule saveLoadModule)
+        private IDataStorage _dataStorage;
+        private DiContainer _diContainer;
+
+        public LoadLayersButtonModel(ISaveLoadModule saveLoadModule,
+            IDataStorage dataStorage, DiContainer diContainer)
         {
-            this.fileBrowser = fileBrowser;
-            this._saveLoadModule = saveLoadModule;
+            _diContainer = diContainer;
+            _dataStorage = dataStorage;
+            _saveLoadModule = saveLoadModule;
         }
         
         public IObservable<IButtonModel> Button =>
@@ -31,11 +37,9 @@ namespace UI.Models.Buttons
                 model.AddTo(disposable);
                 model.Click.Subscribe(_ =>
                 {
-                    Debug.Log("Load");
-                    // var path = fileBrowser.OpenFilePanel("Open file", null, null, false);
-                    // var data = saveLoadService.LoadLayers(path.First().Name);
-                    // var layers = data.Layers.Select(x => x.ToLayer()).ToList();
-                    // dataStorage.FillLayers(layers);
+                    var data = _saveLoadModule.Load();
+                    var layers = data.Lists.Select(x => x.ToListModel(_diContainer)).ToList();
+                    _dataStorage.FillLists(layers);
                 }).AddTo(disposable);
                 observer.OnNext(model);
                 return disposable;

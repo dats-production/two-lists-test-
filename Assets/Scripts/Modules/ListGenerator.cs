@@ -1,64 +1,52 @@
-﻿using UI.Models;
+﻿using Modules.DataStorage;
+using UI.Models;
 using UI.Views;
+using UniRx;
+using UnityEngine;
 using Zenject;
-using Random = UnityEngine.Random;
 
 namespace Modules
 {
     public interface IListGenerator
     {
-        void CreateList(AbstractListModel abstractListModel);
+        void GenerateList(ListModel listModel);
     }
     
     public class ListGenerator : IListGenerator
     {
-        const string glyphs= "abcdefghijklmnopqrstuvwxyz";
-        
-        private readonly int _minItemIntValue = 0;
-        private readonly int _maxItemIntValue = 100;
-        private readonly int _minCharAmount = 1;
-        private readonly int _maxCharAmount = 10;
-        
         private ISpawnModule<AbstractModel> _spawnModule;
+        private IDataStorage _dataStorage;
+        private MainScreen _mainScreen;
 
         [Inject]
-        public void Construct(ISpawnModule<AbstractModel> spawnModule)
+        public void Construct(ISpawnModule<AbstractModel> spawnModule, 
+            IDataStorage dataStorage, MainScreen mainScreen)
         {
+            _mainScreen = mainScreen;
+            _dataStorage = dataStorage;
             _spawnModule = spawnModule;
+            _dataStorage.Lists.ObserveAdd()
+                .Select(x=>x.Value)
+                .Subscribe(GenerateList);
         }
         
-        public void CreateList(AbstractListModel abstractListModel)
+        public void GenerateList(ListModel listModel)
         {
-            var listView = abstractListModel.View as ItemListView;
-            for (var i = 0; i < abstractListModel.StartItemCount; i++)
-            {
-                var itemModel = new ItemModel()
-                {
-                    IntValue = GetRandomInt(),
-                    StringValue = GetRandomString()
-                };
-                abstractListModel.ItemsList.Add(itemModel);
-                
-                itemModel.PrefabName = "Item";
-                itemModel.ParentTransform = listView.ItemContainer;
-                _spawnModule.Spawn(itemModel);
-            }
+            listModel.PrefabName = "ItemList";
+            listModel.ParentTransform = _mainScreen.ListsContainer;
+            _spawnModule.Spawn(listModel);
+            
+            var listView = listModel.View as ListView;
+            foreach (var itemModel in listModel.Items)
+                GenerateItem(itemModel, listView.ItemContainer);
+            listModel.OnListGenerated?.Invoke();
         }
 
-        private int GetRandomInt()
+        private void GenerateItem(ItemModel itemModel,Transform parent)
         {
-            return Random.Range(_minItemIntValue, _maxItemIntValue);
-        }
-
-        private string GetRandomString()
-        {
-            var charAmount = Random.Range(_minCharAmount, _maxCharAmount);
-            var myString = "";
-            for(int i=0; i<charAmount; i++)
-            {
-                myString += glyphs[Random.Range(0, glyphs.Length)];
-            }
-            return myString;
+            itemModel.PrefabName = "Item";
+            itemModel.ParentTransform = parent;
+            _spawnModule.Spawn(itemModel);
         }
     }
 }

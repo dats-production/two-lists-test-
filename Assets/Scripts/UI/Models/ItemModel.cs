@@ -2,7 +2,13 @@
 {
     public class ItemModel : AbstractModel
     {
-        public int IntValue { get; set; }
         public string StringValue { get; set; }
+        public int IntValue { get; set; }
+
+        public ItemModel(string stringValue, int intValue)
+        {
+            StringValue = stringValue;
+            IntValue = intValue;
+        }
     }
 }

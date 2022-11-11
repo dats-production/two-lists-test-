@@ -1,5 +1,8 @@
-﻿namespace Modules.SaveLoad.Data
+﻿using System;
+
+namespace Modules.SaveLoad.Data
 {
+    [Serializable]
     public class ItemData
     {
         public string StringValue;

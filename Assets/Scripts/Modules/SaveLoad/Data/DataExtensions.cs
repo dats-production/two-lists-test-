@@ -1,14 +1,37 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using UI.Models;
+using Zenject;
 
 namespace Modules.SaveLoad.Data
 {
     public static class DataExtensions
     {
-        public static ItemData AsItemData(this ItemModel listModel)
+        public static ListData AsListData(this ListModel listModel) 
         {
-            return new ItemData(listModel.StringValue, listModel.IntValue);
+            return new ListData(
+                listModel.Name,
+                listModel.Items.Select(x => x.AsItemData()).ToList(), 
+                listModel.IsSortingPanelActive);
+        }
+
+        public static ListModel ToListModel(this ListData data, DiContainer diContainer)
+        {
+            return diContainer.Instantiate<ListModel>(new object[]
+            {
+                data.Name,
+                data.Items.Select(x => x.ToItemModel()).ToList(),
+                data.IsSortingPanelActive
+            });
+        }
+
+        private static ItemData AsItemData(this ItemModel itemModel)
+        {
+            return new ItemData(itemModel.StringValue, itemModel.IntValue);
+        }
+        
+        private static ItemModel ToItemModel(this ItemData data)
+        {
+            return new ItemModel(data.StringValue, data.IntValue);
         }
     }
 }

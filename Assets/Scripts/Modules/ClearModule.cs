@@ -13,7 +13,7 @@ namespace Modules
     {
         public void ClearView(TModel model)
         {
-            model.View.Destroy();
+            model.View?.Destroy();
         }
     }
 }

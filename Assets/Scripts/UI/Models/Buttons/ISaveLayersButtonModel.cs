@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Modules;
+using Modules.DataStorage;
 using Modules.SaveLoad;
 using Modules.SaveLoad.Data;
 using UniRx;
@@ -15,18 +16,14 @@ namespace UI.Models.Buttons
 
     public class SaveLayersButtonModel : ISaveLayersButtonModel
     {
-        private readonly IFileBrowser fileBrowser;
         private readonly ISaveLoadModule _saveLoadModule;
-        private FirstListModel _firstListModel;
-        private SecondListModel _secondListModel;
+        private readonly IDataStorage _dataStorage;
 
-        public SaveLayersButtonModel(IFileBrowser fileBrowser, ISaveLoadModule saveLoadModule,
-            FirstListModel firstListModel, SecondListModel secondListModel)
+        public SaveLayersButtonModel(ISaveLoadModule saveLoadModule,
+            IDataStorage dataStorage)
         {
-            _secondListModel = secondListModel;
-            _firstListModel = firstListModel;
-            this.fileBrowser = fileBrowser;
-            this._saveLoadModule = saveLoadModule;
+            _dataStorage = dataStorage;
+            _saveLoadModule = saveLoadModule;
         }
         
         public IObservable<IButtonModel> Button =>
@@ -37,12 +34,9 @@ namespace UI.Models.Buttons
                 model.AddTo(disposable);
                 model.Click.Subscribe(_ =>
                 {
-                    Debug.Log("Save");
-                    var firstListData = _firstListModel.ItemsList.Select(x => x.AsItemData()).ToList();
-                    // var layers = dataStorage.Layers.Select(x => x.AsLayerData()).ToList();
-                    // var path = fileBrowser.SaveFilePanel("Save file", null, null, null);
-                    // var data = new LayersData(layers);
-                    // saveLoadService.SaveLayers(data, path.Name);
+                    var lists = _dataStorage.Lists.Select(x => x.AsListData()).ToList();
+                    var data = new ListsData(lists);
+                    _saveLoadModule.Save(data);
                 }).AddTo(disposable);
                 observer.OnNext(model);
                 return disposable;
